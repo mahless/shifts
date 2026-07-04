@@ -226,7 +226,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
               </button>
             </div>
             <p className="text-[9px] text-gray-400 text-center">
-              سيتم كل اسبوع الحفظ التلقائي للبيانات علي ذاكره الهاتف..
+              سيتم تحديث ملف النسخة الاحتياطية تلقائياً
             </p>
           </div>
 

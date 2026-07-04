@@ -50,15 +50,6 @@ export const getHolidayName = (date: Date): string | null => {
 export const isHighlightHoliday = (date: Date): boolean => {
     const name = getHolidayName(date);
     if (!name) return false;
-
-    if (name === 'عيد الفطر المبارك' || name === 'عيد الأضحى المبارك') {
-        const prevDate = subDays(date, 1);
-        const prevName = getHolidayName(prevDate);
-        if (prevName === name) {
-            return false;
-        }
-    }
-
     return true;
 };
 

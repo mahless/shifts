@@ -72,46 +72,39 @@ export const useAppState = () => {
 
     // --- Auto Backup ---
     useEffect(() => {
-        const checkAutoBackup = async () => {
+        const doAutoBackup = async () => {
             if (!Capacitor.isNativePlatform()) return;
             if (!isLoaded) return;
 
-            const lastBackup = localStorage.getItem('last_backup_date');
-            const now = new Date();
-            const oneWeekInMs = 7 * 24 * 60 * 60 * 1000;
+            try {
+                const data: AppState = { 
+                    leaves, 
+                    totalBalance: typeof totalBalance === 'number' ? totalBalance : 0, 
+                    notes,
+                    hijriOffset,
+                    shiftSystem,
+                    restDays
+                };
+                const dataStr = JSON.stringify(data, null, 2);
+                const fileName = 'Shift-backup.json';
 
-            if (!lastBackup || (now.getTime() - new Date(lastBackup).getTime() > oneWeekInMs)) {
-                try {
-                    const data: AppState = { 
-                        leaves, 
-                        totalBalance: typeof totalBalance === 'number' ? totalBalance : 0, 
-                        notes,
-                        hijriOffset,
-                        shiftSystem,
-                        restDays
-                    };
-                    const dataStr = JSON.stringify(data, null, 2);
-                    const fileName = 'Shift-backup.json';
+                await Filesystem.writeFile({
+                    path: fileName,
+                    data: dataStr,
+                    directory: Directory.Documents,
+                    encoding: Encoding.UTF8,
+                    recursive: true
+                });
 
-                    await Filesystem.writeFile({
-                        path: fileName,
-                        data: dataStr,
-                        directory: Directory.Documents,
-                        encoding: Encoding.UTF8,
-                        recursive: true
-                    });
-
-                    localStorage.setItem('last_backup_date', now.toISOString());
-                    console.log('Auto backup completed');
-                } catch (e) {
-                    console.error('Auto backup failed', e);
-                }
+                localStorage.setItem('last_backup_date', new Date().toISOString());
+                console.log('Auto backup completed instantly on data change');
+            } catch (e) {
+                console.error('Auto backup failed', e);
             }
         };
 
-        if (Object.keys(leaves).length > 0) {
-            checkAutoBackup();
-        }
+        // Run on every dependency change
+        doAutoBackup();
     }, [leaves, totalBalance, notes, isLoaded, hijriOffset, shiftSystem, restDays]);
 
     return {
