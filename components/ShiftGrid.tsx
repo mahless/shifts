@@ -124,7 +124,7 @@ export const ShiftGrid: React.FC<ShiftGridProps> = ({
     const handleDateClick = (date: Date) => {
         const salaryMsg = getSalaryMessage(date);
         if (salaryMsg) {
-            setPopupData({ name: salaryMsg, title: '', icon: '💲💲' });
+            setPopupData({ name: salaryMsg, title: '', icon: '' });
             return;
         }
 

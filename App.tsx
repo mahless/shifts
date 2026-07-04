@@ -16,6 +16,9 @@ import { getShiftForGroup, getLeaveKey } from './utils/dateUtils';
 import { App as CapacitorApp } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 
+import { setOfficialHolidays } from './constants/holidays';
+import { setSalaryDates } from './constants/salaryDates';
+
 // Hooks
 import { useAppState } from './hooks/useAppState';
 
@@ -60,6 +63,34 @@ function App() {
   const [isLeaveDetailsOpen, setLeaveDetailsOpen] = useState(false);
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [isLoadingData, setIsLoadingData] = useState(true);
+  const [showOfflineAlert, setShowOfflineAlert] = useState(false);
+
+  // --- Fetch Google Sheets Data ---
+  useEffect(() => {
+    const fetchGoogleSheetsData = async () => {
+      try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbwBfq69qB4PMuJANEBifRYwwKbjVaKbzIBIDYw34eeM-3Jl6AWHnuP0JGrwqxq49uU/exec');
+        const json = await response.json();
+        
+        if (json.status === 'success' && json.data) {
+          if (json.data.holidays && json.data.holidays.length > 0) {
+            setOfficialHolidays(json.data.holidays);
+          }
+          if (json.data.salaries && json.data.salaries.length > 0) {
+            setSalaryDates(json.data.salaries);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch data from Google Sheets:', error);
+        setShowOfflineAlert(true);
+      } finally {
+        setIsLoadingData(false); // Trigger re-render with new data
+      }
+    };
+
+    fetchGoogleSheetsData();
+  }, []);
 
   const [fontSize, setFontSize] = useState<'small' | 'medium'>(
     (localStorage.getItem('app_font_size') as 'small' | 'medium') || 'medium'
@@ -384,6 +415,31 @@ function App() {
         message={successMessage}
         onClose={() => setSuccessModalOpen(false)}
       />
+
+      {/* Offline Alert Modal */}
+      {showOfflineAlert && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+          <div className="bg-white rounded-3xl shadow-2xl p-6 w-full max-w-sm text-center">
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 text-red-500">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="2" y1="2" x2="22" y2="22" />
+                <path d="M8.5 8.5a11 11 0 0 1 11.5 7.5" />
+                <path d="M4.93 10.93A11 11 0 0 1 12 7" />
+                <path d="M2.5 13.5a11 11 0 0 1 1.6-1.6" />
+                <path d="M16 16a11 11 0 0 1-13.5-2.5" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-gray-800 mb-2">تنبيه</h3>
+            <p className="text-gray-600 mb-6 font-medium">اتصل بالانترنت لعرض الاجازات ومواعيد الراتب</p>
+            <button
+              onClick={() => setShowOfflineAlert(false)}
+              className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-colors"
+            >
+              موافق
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

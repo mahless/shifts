@@ -7,35 +7,13 @@ export interface SalaryDate {
     message: string;
 }
 
-export const SALARY_DATES: SalaryDate[] = [
-    // Group 1: "الربع شهر" (Quarter Month)
-    { month: 0, day: 15, year: 2026, message: 'الربع شهر 💵' },
-    { month: 1, day: 12, year: 2026, message: 'الربع شهر 💵' },
-    { month: 2, day: 16, year: 2026, message: 'الربع شهر 💵' },
-    { month: 3, day: 15, year: 2026, message: 'الربع شهر 💵' },
-    { month: 4, day: 14, year: 2026, message: 'الربع شهر 💵' },
-    { month: 5, day: 15, year: 2026, message: 'الربع شهر 💵' },
-    { month: 6, day: 15, year: 2026, message: 'الربع شهر 💵' },
-    { month: 7, day: 13, year: 2026, message: 'الربع شهر 💵' },
-    { month: 8, day: 15, year: 2026, message: 'الربع شهر 💵' },
-    { month: 9, day: 15, year: 2026, message: 'الربع شهر 💵' },
-    { month: 10, day: 12, year: 2026, message: 'الربع شهر 💵' },
-    { month: 11, day: 15, year: 2026, message: 'الربع شهر 💵' },
+export let SALARY_DATES: SalaryDate[] = [];
 
-    // Group 2: "المرتب الشهري" (Monthly Salary)
-    { month: 0, day: 28, year: 2026, message: 'المرتب الشهري 💵' },
-    { month: 1, day: 25, year: 2026, message: 'المرتب الشهري 💵' },
-    { month: 2, day: 30, year: 2026, message: 'المرتب الشهري 💵' },
-    { month: 3, day: 28, year: 2026, message: 'المرتب الشهري 💵' },
-    { month: 4, day: 25, year: 2026, message: 'المرتب الشهري 💵' },
-    { month: 5, day: 29, year: 2026, message: 'المرتب الشهري 💵' },
-    { month: 6, day: 29, year: 2026, message: 'المرتب الشهري 💵' },
-    { month: 7, day: 27, year: 2026, message: 'المرتب الشهري 💵' },
-    { month: 8, day: 28, year: 2026, message: 'المرتب الشهري 💵' },
-    { month: 9, day: 28, year: 2026, message: 'المرتب الشهري 💵' },
-    { month: 10, day: 26, year: 2026, message: 'المرتب الشهري 💵' },
-    { month: 11, day: 28, year: 2026, message: 'المرتب الشهري 💵' },
-];
+export const setSalaryDates = (newData: SalaryDate[]) => {
+    if (newData && newData.length > 0) {
+        SALARY_DATES = newData;
+    }
+};
 
 export const getSalaryMessage = (date: Date): string | null => {
     const month = getMonth(date);
