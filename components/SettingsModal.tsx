@@ -290,8 +290,9 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
         </div>
 
         <div className="mt-8 pt-4 border-t border-gray-100 flex flex-col items-center gap-1">
-          <p className="text-[10px] text-gray-400 font-bold">إصدار رسمي v1.0.0</p>
-          <p className="text-[8px] text-gray-300">حقوق النشر © ٢٠٢٦ - جميع الحقوق محفوظة</p>
+          <p className="text-[10px] text-gray-500 font-bold">إصدار v1.0.0</p>
+          <p className="text-[8px] text-gray-500">حقوق النشر © يناير ٢٠٢٦</p>
+          <p className="text-[8px] text-gray-500">تم التطوير بواسطة <a href="https://wa.me/201000927323" target="_blank" rel="noopener noreferrer">محمد محليس</a></p>
         </div>
 
         <input

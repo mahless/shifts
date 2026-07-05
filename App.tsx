@@ -68,12 +68,33 @@ function App() {
 
   // --- Fetch Google Sheets Data ---
   useEffect(() => {
+    // 1. Load cached data first
+    const loadCachedData = () => {
+      try {
+        const cachedStr = localStorage.getItem('cached_sheet_data');
+        if (cachedStr) {
+          const cachedJson = JSON.parse(cachedStr);
+          if (cachedJson.holidays && cachedJson.holidays.length > 0) {
+            setOfficialHolidays(cachedJson.holidays);
+          }
+          if (cachedJson.salaries && cachedJson.salaries.length > 0) {
+            setSalaryDates(cachedJson.salaries);
+          }
+        }
+      } catch (e) {
+        console.error('Failed to load cached sheet data', e);
+      }
+    };
+
     const fetchGoogleSheetsData = async () => {
       try {
         const response = await fetch('https://script.google.com/macros/s/AKfycbwBfq69qB4PMuJANEBifRYwwKbjVaKbzIBIDYw34eeM-3Jl6AWHnuP0JGrwqxq49uU/exec');
         const json = await response.json();
         
         if (json.status === 'success' && json.data) {
+          // 2. Save fetched data to cache
+          localStorage.setItem('cached_sheet_data', JSON.stringify(json.data));
+          
           if (json.data.holidays && json.data.holidays.length > 0) {
             setOfficialHolidays(json.data.holidays);
           }
@@ -89,6 +110,7 @@ function App() {
       }
     };
 
+    loadCachedData();
     fetchGoogleSheetsData();
   }, []);
 

@@ -63,7 +63,7 @@ const Footer: React.FC<FooterProps> = ({
             </button>
 
             <p className="text-center text-xs text-black mt-2">
-                المطور : محمد ابراهيم محليس
+                المطور : <a href="https://wa.me/201000927323" target="_blank" rel="noopener noreferrer">محمد محليس</a>
             </p>
 
         </div >

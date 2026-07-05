@@ -159,22 +159,21 @@ export const ShiftGrid: React.FC<ShiftGridProps> = ({
                         <div
                             key={date.toISOString()}
                             ref={isTodayDate ? todayRowRef : null}
-                            className={`grid ${shiftSystem === 'NAHARI' ? 'grid-cols-[minmax(0,1.35fr)_minmax(0,4fr)]' : (selectedGroup === 'ALL' ? 'grid-cols-[minmax(0,1.35fr)_repeat(4,minmax(0,1fr))]' : 'grid-cols-[minmax(0,1.35fr)_minmax(0,4fr)]')} gap-0.5 items-stretch ${isTodayDate ? 'ring-1 ring-blue-400 rounded-lg p-0.5 bg-blue-50/50 -ml-1 pl-1 -mr-1 pr-1' : ''}`}
+                            className={`grid ${shiftSystem === 'NAHARI' ? 'grid-cols-[minmax(0,1.35fr)_minmax(0,4fr)]' : (selectedGroup === 'ALL' ? 'grid-cols-[minmax(0,1.35fr)_repeat(4,minmax(0,1fr))]' : 'grid-cols-[minmax(0,1.35fr)_minmax(0,4fr)]')} gap-0.5 items-stretch ${isTodayDate ? 'ring-[1.5px] ring-blue-500 rounded-lg p-0.5 bg-blue-50/50 -ml-1 pl-1 -mr-1 pr-1' : ''}`}
                         >
                             {/* Date Column - Clickable for holidays and salary dates */}
                             <button
                                 onClick={() => handleDateClick(date)}
                                 className={`flex flex-col items-center justify-center rounded-lg shadow-sm min-h-[3rem] py-0.5 px-1 h-full relative transition-transform active:scale-95 date-column
-                                    ${isTodayDate ? 'bg-blue-600 text-white' :
-                                        isHoliday ? 'bg-green-500 text-white' :
-                                            salaryMessage ? 'bg-blue-500/20 text-blue-900 border border-blue-200' :
-                                                'bg-white text-black'}`}
+                                    ${isHoliday ? 'bg-green-500/30 text-green-900 border border-green-200' :
+                                        salaryMessage ? 'bg-blue-500/20 text-blue-900 border border-blue-200' :
+                                            'bg-white text-black'}`}
                             >
                                 <div className="flex flex-row items-baseline justify-center gap-1 w-full flex-nowrap whitespace-nowrap">
                                     <span className="text-xs leading-tight text-center day-name">{dayName}</span>
                                     <span className="font-bold text-lg leading-none">{dayNum}</span>
                                 </div>
-                                <span className={`text-[11px] leading-tight text-center break-words w-full mt-0.5 ${isTodayDate || isHoliday ? 'text-white/90' : 'text-black'}`}>( {hijriDate} )</span>
+                                <span className={`text-[11px] leading-tight text-center break-words w-full mt-0.5 ${isHoliday ? 'text-green-900/100' : salaryMessage ? 'text-blue-900/90' : 'text-gray-600'}`}>( {hijriDate} )</span>
                                 {/* Ramadan crescent mark */}
                                 {isRamadanDay && (
                                     <span className="absolute top-0.5 left-0.5 text-[10px] text-blue-500">🌙</span>
