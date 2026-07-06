@@ -25,13 +25,15 @@ const Footer: React.FC<FooterProps> = ({
                 <div className="flex-1">
                     <label className="text-xs text-gray-500 font-bold block mb-1">إجمالي الرصيد</label>
                     <input
-                        type="number"
+                        type="tel"
                         value={totalBalance}
                         lang="en"
                         dir="ltr"
-                        inputMode="decimal"
                         style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}
-                        onChange={(e) => onTotalBalanceChange(e.target.value === '' ? '' : Number(e.target.value))}
+                        onChange={(e) => {
+                            const val = e.target.value.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString());
+                            onTotalBalanceChange(val === '' ? '' : Number(val));
+                        }}
                         className="w-full bg-gray-50 text-blue-700 font-bold text-center py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none placeholder:text-gray-400"
                     />
                 </div>
