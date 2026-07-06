@@ -338,9 +338,6 @@ function App() {
   return (
     <div
       className="h-full w-full bg-gray-50 relative flex flex-col overflow-hidden px-safe"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
     >
       {/* --- Header --- */}
       <Header

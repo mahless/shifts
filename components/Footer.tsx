@@ -30,6 +30,7 @@ const Footer: React.FC<FooterProps> = ({
                         lang="en"
                         dir="ltr"
                         inputMode="decimal"
+                        style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}
                         onChange={(e) => onTotalBalanceChange(e.target.value === '' ? '' : Number(e.target.value))}
                         className="w-full bg-gray-50 text-blue-700 font-bold text-center py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none placeholder:text-gray-400"
                     />
@@ -37,8 +38,8 @@ const Footer: React.FC<FooterProps> = ({
                 {/* Remaining Balance - Middle */}
                 <div className="flex-1">
                     <label className="text-xs text-gray-500 font-bold block mb-1">الرصيد المتبقي</label>
-                    <div className="bg-blue-50 text-blue-700 font-bold text-center py-2 rounded-xl border border-blue-200">
-                        {remainingBalance} يوم
+                    <div className="bg-blue-50 text-blue-700 font-bold text-center py-2 rounded-xl border border-blue-200 flex justify-center items-center gap-1">
+                        <span style={{ fontFamily: 'Arial, Helvetica, sans-serif' }} dir="ltr">{remainingBalance}</span> <span>يوم</span>
                     </div>
                 </div>
                 {/* Details Button - Left side */}

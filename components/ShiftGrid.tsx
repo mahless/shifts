@@ -11,7 +11,7 @@ const BG_COLORS: Record<ShiftType, string> = {
     [ShiftType.FIRST]: 'bg-gray-300/65',
     [ShiftType.SECOND]: 'bg-gray-300/65',
     [ShiftType.THIRD]: 'bg-gray-300/65',
-    [ShiftType.REST]: 'bg-green-200/65'
+    [ShiftType.REST]: 'bg-cyan-200/50'
 };
 
 const TEXT_COLORS: Record<ShiftType, string> = {
